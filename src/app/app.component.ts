@@ -33,9 +33,9 @@ export class AppComponent implements OnInit {
 			},
 		});
 
-		// store.select('customers').subscribe((response) => {
-		// 	this.customersList = response.data;
-		// });
+		store.select(fromStore.getCustomers).subscribe((response) => {
+			this.customersList = response ?? [];
+		});
 	}
 
 	initForm(): FormGroup {
@@ -45,6 +45,8 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.store.dispatch(new fromStore.LoadCustomer());
+
 		this.formGroup.get('customer')?.valueChanges.subscribe({
 			next: (input) => {
 				console.log(input);
