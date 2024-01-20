@@ -4,6 +4,8 @@ import * as fromStore from './store';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Customer} from './models/customer_model';
 import {CustomerService} from './services/customer.service';
+import {MatDialog} from '@angular/material/dialog';
+import {CustomerFormComponent} from './customer-form/customer-form.component';
 
 @Component({
 	selector: 'app-root',
@@ -13,8 +15,10 @@ import {CustomerService} from './services/customer.service';
 export class AppComponent implements OnInit {
 	protected readonly formBuilder = inject(FormBuilder);
 	protected readonly customerService = inject(CustomerService);
+	protected readonly matDialog = inject(MatDialog);
 
 	protected formGroup!: FormGroup;
+	protected readonly customerFormComponent = CustomerFormComponent;
 	protected customersList: Customer[] = [];
 	protected displayedColumns: string[] = [
 		'name',
@@ -51,6 +55,13 @@ export class AppComponent implements OnInit {
 			next: (input) => {
 				console.log(input);
 			},
+		});
+	}
+
+	openDialog(id?: number) {
+		this.matDialog.open(this.customerFormComponent, {
+			width: '40%',
+			height: 'fit-content',
 		});
 	}
 }

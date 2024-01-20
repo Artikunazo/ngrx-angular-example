@@ -37,7 +37,12 @@
 		<ng-container matColumnDef="edit">
 			<th mat-header-cell *matHeaderCellDef>Edit</th>
 			<td mat-cell *matCellDef>
-				<button mat-mini-fab color="primary" [matTooltip]="'Edit'">
+				<button
+					mat-mini-fab
+					color="primary"
+					[matTooltip]="'Edit'"
+					(click)="openDialog()"
+				>
 					<mat-icon>edit</mat-icon>
 				</button>
 			</td>
@@ -46,4 +51,13 @@
 		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 	</table>
+
+	<button
+		mat-mini-fab
+		color="primary"
+		[matTooltip]="'Add new customer'"
+		(click)="openDialog()"
+	>
+		<mat-icon>add</mat-icon>
+	</button>
 </div>

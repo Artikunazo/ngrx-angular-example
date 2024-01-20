@@ -1,0 +1,17 @@
+<section class="customer-form">
+	<form [formGroup]="formGroup" class="row">
+		<mat-form-field class="col">
+			<input matInput type="text" placeholder="Enter Name" required />
+		</mat-form-field>
+		<mat-form-field class="col">
+			<input matInput type="number" placeholder="Enter Age" required />
+		</mat-form-field>
+		<mat-form-field class="col">
+			<input matInput type="email" placeholder="Enter Email" required />
+		</mat-form-field>
+	</form>
+
+	<button mat-raised-button color="primary" (click)="saveCustomer()">
+		Save
+	</button>
+</section>
