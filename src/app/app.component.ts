@@ -58,10 +58,16 @@ export class AppComponent implements OnInit {
 		});
 	}
 
-	openDialog(id?: number) {
+	openDialog(isEditModeEnabled = false, customerData: Customer = {}) {
+		const data = {
+			isEditModeEnabled,
+			customerData,
+		};
+
 		this.matDialog.open(this.customerFormComponent, {
 			width: '40%',
 			height: 'fit-content',
+			data,
 		});
 	}
 }

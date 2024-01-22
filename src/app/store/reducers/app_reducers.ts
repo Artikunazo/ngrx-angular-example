@@ -1,5 +1,5 @@
 import {Customer} from 'src/app/models/customer_model';
-import * as fromCustomerActions from '../actions/costumer_actions';
+import * as fromCustomerActions from '../actions/customer_actions';
 
 export interface CustomerState {
 	data?: Customer[];
@@ -42,6 +42,25 @@ export function reducer(
 				loaded: false,
 				error: action.payload,
 			};
+
+		case fromCustomerActions.UPDATE_CUSTOMER_SUCCESS:
+			const newData = state.data?.map((customer: Customer) => {
+				if (customer.id === action.payload.id) {
+					return action.payload;
+				}
+
+				return customer;
+			});
+
+			return {
+				...state,
+				data: newData,
+				loaded: true,
+				loading: false,
+			};
+
+		case fromCustomerActions.UPDATE_CUSTOMER_FAIL:
+			return {};
 
 		default:
 			return state;

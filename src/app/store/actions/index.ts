@@ -1,1 +1,1 @@
-export * from './costumer_actions';
+export * from './customer_actions';
