@@ -3,7 +3,7 @@ import {Action} from '@ngrx/store';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as fromCustomerActions from '../actions/customer_actions';
 import {CustomerService} from 'src/app/services/customer.service';
-import {Observable, of} from 'rxjs';
+import {Observable, Observer, of} from 'rxjs';
 import {switchMap, map, catchError} from 'rxjs/operators';
 
 @Injectable({
@@ -42,6 +42,24 @@ export class CustomerEffects {
 					),
 					catchError((error: any) =>
 						of(new fromCustomerActions.UpdateCustomerFail(error))
+					)
+				)
+			)
+		)
+	);
+
+	addCustomer$: Observable<Action> = createEffect(() =>
+		this.actions$.pipe(
+			ofType(fromCustomerActions.ADD_CUSTOMER),
+			map((action: fromCustomerActions.AddCustomer) => action.payload),
+			switchMap((payload: any) =>
+				this.customerService.addCustomer(payload).pipe(
+					map(
+						(response: any) =>
+							new fromCustomerActions.AddCustomerSuccess(response)
+					),
+					catchError((error: any) =>
+						of(new fromCustomerActions.AddCustomerFail(error))
 					)
 				)
 			)

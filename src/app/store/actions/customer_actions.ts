@@ -10,6 +10,11 @@ export const UPDATE_CUSTOMER = '[Customer] Update Customer';
 export const UPDATE_CUSTOMER_SUCCESS = '[Customer] Update Customer Success';
 export const UPDATE_CUSTOMER_FAIL = '[Customer] Update Customer Fail';
 
+/* ADD CUSTOMER */
+export const ADD_CUSTOMER = '[Customer] Add Customer';
+export const ADD_CUSTOMER_SUCCESS = '[Customer] Add Customer success';
+export const ADD_CUSTOMER_FAIL = '[Customer] Add Customer fail';
+
 export class LoadCustomer implements Action {
 	readonly type = LOAD_CUSTOMERS;
 }
@@ -44,10 +49,31 @@ export class UpdateCustomerFail implements Action {
 	constructor(public payload: any) {}
 }
 
+export class AddCustomer implements Action {
+	readonly type = ADD_CUSTOMER;
+
+	constructor(public payload: Customer) {}
+}
+
+export class AddCustomerSuccess implements Action {
+	readonly type = ADD_CUSTOMER_SUCCESS;
+
+	constructor(public payload: any) {}
+}
+
+export class AddCustomerFail implements Action {
+	readonly type = ADD_CUSTOMER_FAIL;
+
+	constructor(public payload: any) {}
+}
+
 export type CustomerActions =
 	| LoadCustomer
 	| LoadCustomerSuccess
 	| LoadCustomerFail
 	| UpdateCustomer
 	| UpdateCustomerFail
-	| UpdateCustomerSuccess;
+	| UpdateCustomerSuccess
+	| AddCustomer
+	| AddCustomerSuccess
+	| AddCustomerFail;

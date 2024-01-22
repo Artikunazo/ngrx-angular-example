@@ -29,4 +29,12 @@ export class CustomerService {
 			this.httpOpt
 		);
 	}
+
+	addCustomer(customer: Customer) {
+		return this.httpClient.post(
+			`${this.apiUrl}`,
+			JSON.stringify(customer),
+			this.httpOpt
+		);
+	}
 }

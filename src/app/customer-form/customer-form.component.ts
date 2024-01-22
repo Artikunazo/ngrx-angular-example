@@ -50,12 +50,27 @@ export class CustomerFormComponent {
 	}
 
 	saveCustomer() {
-		this.store.dispatch(
-			new fromStore.UpdateCustomer({
-				...this.formGroup.value,
-				id: this.matDialogData.customerData?.id,
-			})
-		);
+		if (!this.formGroup.valid) return;
+
+		const id = this.isEditModeEnabled
+			? this.matDialogData.customerData?.id
+			: new Date().getTime();
+
+		if (this.isEditModeEnabled) {
+			this.store.dispatch(
+				new fromStore.UpdateCustomer({
+					...this.formGroup.value,
+					id,
+				})
+			);
+		} else {
+			this.store.dispatch(
+				new fromStore.AddCustomer({
+					...this.formGroup.value,
+					id,
+				})
+			);
+		}
 
 		this.matDialogRef.close();
 		this.matDialogRef.beforeClosed().subscribe({

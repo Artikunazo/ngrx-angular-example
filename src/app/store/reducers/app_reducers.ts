@@ -60,7 +60,23 @@ export function reducer(
 			};
 
 		case fromCustomerActions.UPDATE_CUSTOMER_FAIL:
-			return {};
+			return {
+				...state,
+				error: action.payload,
+			};
+
+		case fromCustomerActions.ADD_CUSTOMER_SUCCESS:
+			return {
+				...state,
+				// '<[]>' Cast to [Symbol.iterator]()
+				data: [...(<[]>state.data), action.payload],
+			};
+
+		case fromCustomerActions.ADD_CUSTOMER_FAIL:
+			return {
+				...state,
+				error: action.payload,
+			};
 
 		default:
 			return state;
