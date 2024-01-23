@@ -1,12 +1,12 @@
 import {Component, inject, Inject} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Customer} from '../models/customer_model';
-import * as fromStore from '../store';
+import {Customer} from '../../models/customer_model';
+import * as fromStore from '../../store';
 import {Store} from '@ngrx/store';
 
 @Component({
-	selector: 'app-customer-form',
+	selector: 'customer-form',
 	templateUrl: './customer-form.component.html',
 	styleUrls: ['./customer-form.component.scss'],
 })

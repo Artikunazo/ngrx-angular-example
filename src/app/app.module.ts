@@ -4,29 +4,25 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule} from './material/material.module';
 import {StoreModule} from '@ngrx/store';
 import {effects, reducers} from './store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
 import {EffectsModule} from '@ngrx/effects';
-import {CustomerFormComponent} from './customer-form/customer-form.component';
+import {HttpClientModule} from '@angular/common/http';
+import {ComponentsModule} from './components/components.module';
 
 @NgModule({
-	declarations: [AppComponent, CustomerFormComponent],
+	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
-		MaterialModule,
-		ReactiveFormsModule,
 		HttpClientModule,
+		ComponentsModule,
 		StoreModule.forRoot(reducers),
 		StoreDevtoolsModule.instrument({}),
 		EffectsModule.forRoot(effects),
 	],
-	providers: [],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
