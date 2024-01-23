@@ -78,6 +78,24 @@ export function reducer(
 				error: action.payload,
 			};
 
+		case fromCustomerActions.DELETE_CUSTOMER_SUCCESS:
+			const userId: string = action.payload;
+
+			return {
+				...state,
+				data: [
+					...(<[]>(
+						state.data?.filter((customer: Customer) => customer.id !== userId)
+					)),
+				],
+			};
+
+		case fromCustomerActions.DELETE_CUSTOMER_FAIL:
+			return {
+				...state,
+				error: action.payload,
+			};
+
 		default:
 			return state;
 	}

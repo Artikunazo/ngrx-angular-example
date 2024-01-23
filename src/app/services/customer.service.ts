@@ -37,4 +37,12 @@ export class CustomerService {
 			this.httpOpt
 		);
 	}
+
+	deleteCustomer(id: string) {
+		console.log({
+			id,
+			type: typeof id,
+		});
+		return this.httpClient.delete(`${this.apiUrl}/${id}`);
+	}
 }

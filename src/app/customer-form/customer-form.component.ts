@@ -54,7 +54,7 @@ export class CustomerFormComponent {
 
 		const id = this.isEditModeEnabled
 			? this.matDialogData.customerData?.id
-			: new Date().getTime();
+			: new Date().getTime().toString();
 
 		if (this.isEditModeEnabled) {
 			this.store.dispatch(

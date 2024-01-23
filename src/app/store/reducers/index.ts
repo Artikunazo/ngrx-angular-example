@@ -4,6 +4,7 @@ import {
 	createSelector,
 } from '@ngrx/store';
 import * as fromCustomerReducer from './app_reducers';
+import {Customer} from 'src/app/models/customer_model';
 
 export interface AppState {
 	customers: fromCustomerReducer.CustomerState;
@@ -21,7 +22,7 @@ export const getCustomers = createSelector(
 	fromCustomerReducer.getCustomers
 );
 
-export const getCustomerById = (id: number) =>
+export const getCustomerById = (id: string) =>
 	createSelector(getCustomers, (customers) =>
-		customers?.find((person) => person.id === id || {})
+		customers?.find((person: Customer) => person.id === id || {})
 	);

@@ -1,46 +1,10 @@
 {
   "users": [
     {
+      "id": "1705967549012",
       "name": "Luis",
-      "age": 22,
-      "email": "luis@email.com",
-      "id": "1"
-    },
-    {
-      "id": "2",
-      "name": "Laura",
-      "age": 36,
-      "email": "laura@email.com"
-    },
-    {
-      "id": "3",
-      "name": "Carmen",
-      "age": 30,
-      "email": "carmen@email.com"
-    },
-    {
-      "id": "4",
-      "name": "Miguel",
-      "age": 28,
-      "email": "miguel@email.com"
-    },
-    {
-      "id": "1705955615462",
-      "name": "Arturo",
-      "age": 30,
-      "email": "arturo@email.com"
-    },
-    {
-      "id": "1705957104665",
-      "name": "Marco",
-      "age": 50,
-      "email": "marco@gmail.com"
-    },
-    {
-      "id": 1705957693392,
-      "name": "Maria",
-      "age": 45,
-      "email": "maria@email.com"
+      "age": 23,
+      "email": "luis@email.com"
     }
   ]
 }

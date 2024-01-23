@@ -65,4 +65,19 @@ export class CustomerEffects {
 			)
 		)
 	);
+
+	deleteCustomer$: Observable<Action> = createEffect(() =>
+		this.actions$.pipe(
+			ofType(fromCustomerActions.DELETE_CUSTOMER),
+			map((action: fromCustomerActions.DeleteCustomer) => action.payload),
+			switchMap((payload: string) =>
+				this.customerService.deleteCustomer(payload).pipe(
+					map(() => new fromCustomerActions.DeleteCustomerSuccess(payload)),
+					catchError((error: any) =>
+						of(new fromCustomerActions.DeleteCustomerFail(error))
+					)
+				)
+			)
+		)
+	);
 }

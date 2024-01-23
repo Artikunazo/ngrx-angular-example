@@ -30,21 +30,24 @@ export class AppComponent implements OnInit {
 
 	constructor(private store: Store<fromStore.AppState>) {
 		this.formGroup = this.initForm();
-
-		this.customerService.getCustomers().subscribe({
-			next: (response) => {
-				this.customersList = response;
-			},
-		});
-
-		store.select(fromStore.getCustomers).subscribe((response) => {
-			this.customersList = response ?? [];
-		});
+		this.loadCustomers();
 	}
 
 	initForm(): FormGroup {
 		return this.formBuilder.group({
 			customer: this.formBuilder.control(''),
+		});
+	}
+
+	loadCustomers(): void {
+		// this.customerService.getCustomers().subscribe({
+		// 	next: (response) => {
+		// 		this.customersList = response;
+		// 	},
+		// });
+
+		this.store.select(fromStore.getCustomers).subscribe((response: any) => {
+			this.customersList = response ?? [];
 		});
 	}
 
@@ -69,5 +72,11 @@ export class AppComponent implements OnInit {
 			height: 'fit-content',
 			data,
 		});
+	}
+
+	deleteCustomer(customer: Customer): void {
+		if (!customer.id) return;
+
+		this.store.dispatch(new fromStore.DeleteCustomer(customer.id));
 	}
 }
