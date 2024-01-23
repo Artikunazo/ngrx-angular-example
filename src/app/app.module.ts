@@ -11,7 +11,7 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {EffectsModule} from '@ngrx/effects';
-import { CustomerFormComponent } from './customer-form/customer-form.component';
+import {CustomerFormComponent} from './customer-form/customer-form.component';
 
 @NgModule({
 	declarations: [AppComponent, CustomerFormComponent],

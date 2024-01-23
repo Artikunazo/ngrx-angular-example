@@ -6,6 +6,7 @@
 				type="text"
 				placeholder="Customer search"
 				formControlName="customer"
+				(keyup)="applyFilter($event)"
 			/>
 		</form>
 	</mat-form-field>

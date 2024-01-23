@@ -6,6 +6,7 @@ import {Customer} from './models/customer_model';
 import {CustomerService} from './services/customer.service';
 import {MatDialog} from '@angular/material/dialog';
 import {CustomerFormComponent} from './customer-form/customer-form.component';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
 	selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
 
 	protected formGroup!: FormGroup;
 	protected readonly customerFormComponent = CustomerFormComponent;
-	protected customersList: Customer[] = [];
+	protected customersList = new MatTableDataSource<Customer>();
 	protected displayedColumns: string[] = [
 		'name',
 		'age',
@@ -40,25 +41,24 @@ export class AppComponent implements OnInit {
 	}
 
 	loadCustomers(): void {
-		// this.customerService.getCustomers().subscribe({
-		// 	next: (response) => {
-		// 		this.customersList = response;
-		// 	},
-		// });
-
 		this.store.select(fromStore.getCustomers).subscribe((response: any) => {
-			this.customersList = response ?? [];
+			this.customersList.data = response ?? [];
 		});
 	}
 
 	ngOnInit(): void {
 		this.store.dispatch(new fromStore.LoadCustomer());
 
-		this.formGroup.get('customer')?.valueChanges.subscribe({
-			next: (input) => {
-				console.log(input);
-			},
-		});
+		this.customersList.filterPredicate = (record, filter) => {
+			return record.name?.toLowerCase() === filter.toLowerCase();
+		};
+
+		// this.formGroup.get('customer')?.valueChanges.subscribe({
+		// 	next: (input) => {
+		// 		console.log(input);
+		// 		this.customersList.filter = input.trim().toLowerCase();
+		// 	},
+		// });
 	}
 
 	openDialog(isEditModeEnabled = false, customerData: Customer = {}) {
@@ -78,5 +78,10 @@ export class AppComponent implements OnInit {
 		if (!customer.id) return;
 
 		this.store.dispatch(new fromStore.DeleteCustomer(customer.id));
+	}
+
+	applyFilter(event: Event) {
+		const filterValue = (event.target as HTMLInputElement).value;
+		this.customersList.filter = filterValue.trim().toLowerCase();
 	}
 }
