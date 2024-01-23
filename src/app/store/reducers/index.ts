@@ -17,9 +17,10 @@ export const reducers: ActionReducerMap<AppState, any> = {
 export const getState = (state: any) => state;
 export const getCustomersState =
 	createFeatureSelector<fromCustomerReducer.CustomerState>('customers');
+
 export const getCustomers = createSelector(
 	getCustomersState,
-	fromCustomerReducer.getCustomers
+	fromCustomerReducer.customerAdapter.getSelectors().selectAll
 );
 
 export const getCustomerById = (id: string) =>

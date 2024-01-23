@@ -5,6 +5,7 @@ import * as fromCustomerActions from '../actions/customer_actions';
 import {CustomerService} from 'src/app/services/customer.service';
 import {Observable, Observer, of} from 'rxjs';
 import {switchMap, map, catchError} from 'rxjs/operators';
+import {Customer} from 'src/app/models/customer_model';
 
 @Injectable({
 	providedIn: 'root',
@@ -37,8 +38,11 @@ export class CustomerEffects {
 			switchMap((payload: any) =>
 				this.customerService.updateCustomer(payload).pipe(
 					map(
-						(response: any) =>
-							new fromCustomerActions.UpdateCustomerSuccess(response)
+						(updatedCustomer: Customer) =>
+							new fromCustomerActions.UpdateCustomerSuccess({
+								id: updatedCustomer.id,
+								changes: updatedCustomer,
+							})
 					),
 					catchError((error: any) =>
 						of(new fromCustomerActions.UpdateCustomerFail(error))

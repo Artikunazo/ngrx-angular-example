@@ -1,19 +1,28 @@
 import {Customer} from 'src/app/models/customer_model';
 import * as fromCustomerActions from '../actions/customer_actions';
+import {EntityAdapter, EntityState, createEntityAdapter} from '@ngrx/entity';
 
-export interface CustomerState {
-	data?: Customer[];
+export interface CustomerState extends EntityState<Customer> {
+	// data?: Customer[];
+	ids: number[];
+	entities: any;
 	loaded?: boolean;
 	loading?: boolean;
 	error?: any;
 }
 
-export const initialState: CustomerState = {
-	data: [],
+export const customerAdapter: EntityAdapter<Customer> =
+	createEntityAdapter<Customer>();
+
+export const defaultCustomer: CustomerState = {
+	ids: [],
+	entities: {},
 	loading: false,
 	loaded: false,
 	error: '',
 };
+
+export const initialState = customerAdapter.getInitialState(defaultCustomer);
 
 export function reducer(
 	state = initialState,
@@ -26,14 +35,13 @@ export function reducer(
 				loading: true,
 			};
 
-		case fromCustomerActions.LOAD_CUSTOMERS_SUCCESS:
-			const data = action.payload;
-			return {
+		case fromCustomerActions.LOAD_CUSTOMERS_SUCCESS: {
+			return customerAdapter.addMany(action.payload, {
 				...state,
 				loading: false,
 				loaded: true,
-				data,
-			};
+			});
+		}
 
 		case fromCustomerActions.LOAD_CUSTOMERS_FAIL:
 			return {
@@ -43,21 +51,9 @@ export function reducer(
 				error: action.payload,
 			};
 
-		case fromCustomerActions.UPDATE_CUSTOMER_SUCCESS:
-			const newData = state.data?.map((customer: Customer) => {
-				if (customer.id === action.payload.id) {
-					return action.payload;
-				}
-
-				return customer;
-			});
-
-			return {
-				...state,
-				data: newData,
-				loaded: true,
-				loading: false,
-			};
+		case fromCustomerActions.UPDATE_CUSTOMER_SUCCESS: {
+			return customerAdapter.updateOne(action.payload, state);
+		}
 
 		case fromCustomerActions.UPDATE_CUSTOMER_FAIL:
 			return {
@@ -65,12 +61,9 @@ export function reducer(
 				error: action.payload,
 			};
 
-		case fromCustomerActions.ADD_CUSTOMER_SUCCESS:
-			return {
-				...state,
-				// '<[]>' Cast to [Symbol.iterator]()
-				data: [...(<[]>state.data), action.payload],
-			};
+		case fromCustomerActions.ADD_CUSTOMER_SUCCESS: {
+			return customerAdapter.addOne(action.payload, state);
+		}
 
 		case fromCustomerActions.ADD_CUSTOMER_FAIL:
 			return {
@@ -78,17 +71,9 @@ export function reducer(
 				error: action.payload,
 			};
 
-		case fromCustomerActions.DELETE_CUSTOMER_SUCCESS:
-			const userId: string = action.payload;
-
-			return {
-				...state,
-				data: [
-					...(<[]>(
-						state.data?.filter((customer: Customer) => customer.id !== userId)
-					)),
-				],
-			};
+		case fromCustomerActions.DELETE_CUSTOMER_SUCCESS: {
+			return customerAdapter.removeOne(action.payload, state);
+		}
 
 		case fromCustomerActions.DELETE_CUSTOMER_FAIL:
 			return {
@@ -101,7 +86,6 @@ export function reducer(
 	}
 }
 
-export const getCustomers = (state: CustomerState) => state.data;
 export const getCustomersLoaded = (state: CustomerState) => state.loaded;
 export const getCustomersLoading = (state: CustomerState) => state.loading;
 export const getCustomersError = (state: CustomerState) => state.error;
